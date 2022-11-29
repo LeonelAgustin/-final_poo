@@ -10,8 +10,7 @@ public class Pais {
 	private int puntos;// suma 1 si gana si pierde no suma
 	private int posicion;//primero o segundos
 	
-	public Pais(String nombre, int goles, boolean clasificado, char grupo, Equipo representante, int puntos,
-			int posicion) {
+	public Pais(String nombre, boolean clasificado, char grupo, Equipo representante, int puntos, int posicion) {
 		super();
 		this.nombre = nombre;
 		this.goles = goles;

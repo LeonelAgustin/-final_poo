@@ -5,6 +5,7 @@ public class Partido {
 	private Pais equipo1;
 	private Pais equipo2;
 	private int duracion;
+	
 	public Partido(int id, Pais equipo1, Pais equipo2, int duracion) {
 		super();
 		this.id = id;
