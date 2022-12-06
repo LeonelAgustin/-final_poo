@@ -24,7 +24,9 @@ public class Main {
 		LinkedList<Pais> paisesF = grupoF();
 		LinkedList<Pais> paisesG = grupoG();
 		LinkedList<Pais> paisesH = grupoH();
-		// CAMIBAR GOLES DE CADA PAIS
+		
+		/*
+		// CAMIBAR PUNTOS DE CADA PAIS
 		String mostrar1 = "Grupo A\n";
 		String mostrar2 = "Grupo A\n";
 		String mostrar3 = "";
@@ -42,11 +44,9 @@ public class Main {
 			mostrar2 += "pais= "+pais.getNombre()+"\npuntos= "+pais.getPuntos()+"\n";	
 		}
 		
-		// la funcion cambia los goles de cada pais
+		// la funcion cambia los puntos de cada pais
 		JOptionPane.showMessageDialog(null, mostrar2);
-		
 		// ordenar lista de paises
-		
 		int []puntos= new int[6];
 		int i=0;
 		// paso los goles a un array comun
@@ -79,7 +79,70 @@ public class Main {
 			}
 		}
 		
-		JOptionPane.showMessageDialog(null, "Primero: "+primero+"\nSegundo: "+segundo);
+		JOptionPane.showMessageDialog(null, "GRUPO A\nPrimero: "+primero+"\nSegundo: "+segundo);// primero y segundo del grupo A
+		*/
+		primeroYsegundo(paisesA);
+		//primeroYsegundo(paisesB);
+		//primeroYsegundo(paisesC);
+		//primeroYsegundo(paisesD);
+		//primeroYsegundo(paisesE);
+		//primeroYsegundo(paisesH);
+		
+		
+		
+	}// termina el main
+	
+	public static void primeroYsegundo(LinkedList<Pais> paises) {
+		String mostrar1 = "Grupo A\n";
+		String mostrar2 = "Grupo A\n";
+		String mostrar3 = "";
+		
+		for (Pais pais : paises) {
+			mostrar1 += "pais: "+pais.getNombre()+"\npuntos= "+pais.getPuntos()+"\n";	
+		}
+		JOptionPane.showMessageDialog(null, mostrar1);
+		paises = puntosGrupo(paises);
+		
+		for (Pais pais : paises) {
+			mostrar2 += "pais= "+pais.getNombre()+"\npuntos= "+pais.getPuntos()+"\n";	
+		}
+		// la funcion cambia los puntos de cada pais
+		JOptionPane.showMessageDialog(null, mostrar2);
+		// ordenar lista de paises
+		int []puntos= new int[6];
+		int i=0;
+		// paso los goles a un array comun
+		for (Pais pais : paises) {
+			puntos[i]=pais.getPuntos();
+			i++;
+		}				
+		puntos=burbuja(puntos);// ordeno los goles de mayor a menor
+		puntos=burbuja(puntos);// ordeno los goles de mayor a menor
+		String primero = "";
+		String segundo = "";
+		
+		//System.out.println("puntos 6: "+puntos[5]);
+		//System.out.println("puntos 5: "+puntos[4]);
+		for (Pais pais : paises) {
+			System.out.println(pais);
+		
+		}
+		for (Pais pais : paises) {
+			
+			if(pais.getPuntos()==puntos[5]) {
+				primero= pais.getNombre();
+				System.out.println(pais.getNombre());
+				//JOptionPane primer pais
+			}
+			
+			if(pais.getPuntos()==puntos[4]) {
+				segundo = pais.getNombre();
+				//JOptionPane segundo pais
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, "GRUPO "+paises.get(0).getGrupo()+"\nPrimero: "+primero+"\nSegundo: "+segundo);// primero y segundo del grupo A
+		
 		
 	}
 	
