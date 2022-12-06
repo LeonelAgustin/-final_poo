@@ -36,7 +36,7 @@ public class Main {
 		JOptionPane.showMessageDialog(null, mostrar1);
 		
 		// goles aleatorios para cada pais
-		paisesA = golesGrupo(paisesA);
+		paisesA = puntosGrupo(paisesA);
 		
 		for (Pais pais : paisesA) {
 			mostrar2 += "pais= "+pais.getNombre()+"\npuntos= "+pais.getPuntos()+"\n";	
@@ -47,24 +47,39 @@ public class Main {
 		
 		// ordenar lista de paises
 		
-		int []goles= new int[6];
+		int []puntos= new int[6];
 		int i=0;
+		// paso los goles a un array comun
 		for (Pais pais : paisesA) {
-			goles[i]=pais.getGoles();
-					i++;
+			puntos[i]=pais.getPuntos();
+			i++;
 		}
-		goles=burbuja(goles);
+				
+		puntos=burbuja(puntos);// ordeno los goles de mayor a menor
+		String primero = "";
+		String segundo = "";
 		
+		//System.out.println("puntos 6: "+puntos[5]);
+		//System.out.println("puntos 5: "+puntos[4]);
+	for (Pais pais : paisesA) {
+		System.out.println(pais);
+		
+	}
 		for (Pais pais : paisesA) {
-			if(pais.getGoles()==goles[0]) {
+			
+			if(pais.getPuntos()==puntos[5]) {
+				primero= pais.getNombre();
+				System.out.println(pais.getNombre());
 				//JOptionPane primer pais
 			}
-			if(pais.getGoles()==goles[1]) {
+			
+			if(pais.getPuntos()==puntos[4]) {
+				segundo = pais.getNombre();
 				//JOptionPane segundo pais
 			}
 		}
 		
-		JOptionPane.showMessageDialog(null, "Primero: "+ordenada.get(1)+"\nSegundo: "+ordenada.get(2));
+		JOptionPane.showMessageDialog(null, "Primero: "+primero+"\nSegundo: "+segundo);
 		
 	}
 	
@@ -86,7 +101,7 @@ public class Main {
 		return goles;
 	}
 	
-	public static LinkedList<Pais> golesGrupo(LinkedList<Pais> paises) {
+	public static LinkedList<Pais> puntosGrupo(LinkedList<Pais> paises) {
 		
 		for (Pais pais : paises) {
 			pais.setPuntos((int)(Math.random()*10));
