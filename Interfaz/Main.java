@@ -25,27 +25,18 @@ public class Main {
 		LinkedList<Pais> paisesG = grupoG();
 		LinkedList<Pais> paisesH = grupoH();
 		
-		//pasarOctavos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
-		//pasarCuartos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
-		//pasarSemi(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
-		pasarFinal(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
 		
 		
-		finalistas = pasarFinal(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
-		finalistas = primeroSegundoEmpate(finalistas);
 		
-		JOptionPane.showMessageDialog(null,	"primer lugar: " + finalistas.get(0).getNombre() + "\nsegundo lugar: " + finalistas.get(1).getNombre());
+		
 		//MENU INTERACTIVO
 		do {
 			int a = Integer.parseInt(JOptionPane.showInputDialog("BIENVENIDO\nComo quiere ingresar:\n1-Encargado\n2-Hincha\n3-Salir"));
 
 			if (a == 1) {
-				int menu = Integer.parseInt(JOptionPane.showInputDialog("\n1-Buscar y/o cambiar datos de un partido\n2-Empezar a jugar las etapas del mundial"));
+				int menu = Integer.parseInt(JOptionPane.showInputDialog("\n1-Buscar y/o cambiar datos de un partido\n2-Empezar a jugar las etapas del mundial\n3-Apostar en un partido"));
 				switch (menu) {
 				case 1:
-
-					break;
-				case 2:// visualizar partidos y paises
 					int res = Integer.parseInt(JOptionPane.showInputDialog("1-Ver la tabla de un grupo\n2-Ver un partido\n3-Ver todas las tablas"));
 					if (res == 1) {
 						buscarTabla();
@@ -53,6 +44,29 @@ public class Main {
 						buscarPartidos();
 					} else if (res == 3) {
 						// pablo.verpartidos();
+					}
+					break;
+				case 2:
+					int b = Integer.parseInt(JOptionPane.showInputDialog("Hasta que etapa desea que se juegue:\n1-Fase de grupos\n2-Octavos de final\n3-Cuartos de final\n4-Semifinales\n5-La gran final"));
+					
+					switch (b) {
+					case 1:
+						pasarOctavos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+						break;
+					case 2:
+						pasarCuartos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+						break;
+					case 3:
+						pasarSemi(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+						break;
+					case 4:
+						pasarFinal(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+						break;
+					case 5:
+						finalistas = pasarFinal(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+						
+						JOptionPane.showMessageDialog(null,	"primer lugar: " + finalistas.get(0).getNombre() + "\nsegundo lugar: " + finalistas.get(1).getNombre());
+						break;
 					}
 					break;
 				case 3:
@@ -63,6 +77,7 @@ public class Main {
 					// nombre de u pais para ver si clasifico");
 					break;
 				}
+				
 			} else if (a == 2) {
 
 			} else {
@@ -456,10 +471,12 @@ public class Main {
 		// recorre toda la lista de partidos aunque encuentre los partidos que le indico
 		String pais = JOptionPane.showInputDialog("ingrese el nombre del pais para buscar los partidos relacionados");
 		String partidos = "";
+		char grupo = '-';
 		for (Partido partido : todos) {
 			if (partido.getEquipo1().getNombre().equalsIgnoreCase(pais)	|| partido.getEquipo2().getNombre().equalsIgnoreCase(pais)) {
 				encontrado = true;
 				partidos = partidos + "\n" + partido.getEquipo1().getNombre() + " VS "	+ partido.getEquipo2().getNombre();
+				grupo = partido.getEquipo1().getGrupo();
 			}
 		} // terminar de recorrer todos los partidos
 
@@ -469,7 +486,7 @@ public class Main {
 				JOptionPane.showMessageDialog(null, "agregar partido");
 			}
 		} else if (encontrado) {
-			JOptionPane.showMessageDialog(null, partidos);
+			JOptionPane.showMessageDialog(null, "GRUPO "+grupo+partidos);
 		}
 	}
 
