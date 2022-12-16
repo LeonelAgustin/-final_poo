@@ -25,16 +25,16 @@ public class Main {
 		LinkedList<Pais> paisesG = grupoG();
 		LinkedList<Pais> paisesH = grupoH();
 		
-		pasarOctavos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+		//pasarOctavos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
 		//pasarCuartos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
 		//pasarSemi(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
-		//pasarFinal(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+		pasarFinal(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
 		
-		/*
+		
 		finalistas = pasarFinal(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
 		finalistas = primeroSegundoEmpate(finalistas);
-		JOptionPane.showMessageDialog(null,
-				"primer lugar: " + finalistas.get(0).getNombre() + "\nsegundo lugar: " + finalistas.get(1).getNombre());
+		
+		JOptionPane.showMessageDialog(null,	"primer lugar: " + finalistas.get(0).getNombre() + "\nsegundo lugar: " + finalistas.get(1).getNombre());
 		//MENU INTERACTIVO
 		do {
 			int a = Integer.parseInt(JOptionPane.showInputDialog("BIENVENIDO\nComo quiere ingresar:\n1-Encargado\n2-Hincha\n3-Salir"));
@@ -70,17 +70,17 @@ public class Main {
 			}
 
 		} while (!salir);
-	*/
+	
 	}// termina el main
 
-	public static LinkedList<Pais> pasarFinal(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB,
-			LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF,
-			LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
+	public static LinkedList<Pais> pasarFinal(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB,LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF,LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
 
-		String ganadores = "pasan a FINAL\n";
+		String listado = "ASI QUEDA EL PARTIDO EN LA GRAN FINAL\n";
+		String ganadores = "pasan a LA GRAN FINAL\n";
 		LinkedList<Pais> dupla3 = new LinkedList<Pais>();
 		LinkedList<Pais> semis = new LinkedList<Pais>();
 		LinkedList<Pais> granfinal = new LinkedList<Pais>();
+		LinkedList<Partido> partidos =  new LinkedList<Partido>();
 
 		semis = pasarSemi(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);// 0-4 paises
 		JOptionPane.showMessageDialog(null, "GRAN FINAL");
@@ -99,24 +99,35 @@ public class Main {
 		dupla3 = primeroSegundoEmpate(dupla3);
 		granfinal.add(1, dupla3.get(0));
 
-		for (Pais pais : granfinal) {
-			ganadores += pais.getNombre() + " grupo: " + pais.getGrupo() + "\n";
+		for (int i = 0; i < 2; i++) {
+			ganadores += "\nPais: "+granfinal.get(i).getNombre() + ", Grupo: "+granfinal.get(i).getGrupo()+", Goles: "+granfinal.get(i).getGoles();
 		}
-		JOptionPane.showMessageDialog(null, "pasaron a la gran final:\n" + ganadores);
+		
+		for (int i = 0; i < 2; i+=2) {
+			partidos.add(crearPartido(i,granfinal.get(i),granfinal.get(i+1)));
+		}		
+		
+		for (Partido partido : partidos) {
+			listado +=partido.getEquipo1().getNombre()+" VS "+partido.getEquipo2().getNombre()+"\n";
+		}
+
+		JOptionPane.showMessageDialog(null, ganadores);
+		JOptionPane.showMessageDialog(null, listado);
 
 		return granfinal;
 	}
 
-	public static LinkedList<Pais> pasarSemi(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB,
-			LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF,
-			LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
+	public static LinkedList<Pais> pasarSemi(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB,LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF,	LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
+		
+		String listado = "ASI QUEDAN LOS PARTIDOS EN SEMIFINAL\n";
 		String ganadores = "pasan a SEMIFINAL\n";
 		LinkedList<Pais> dupla2 = new LinkedList<Pais>();
 		LinkedList<Pais> cuartos = new LinkedList<Pais>();
 		LinkedList<Pais> semis = new LinkedList<Pais>();
+		LinkedList<Partido> partidos =  new LinkedList<Partido>();
 
 		cuartos = pasarCuartos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);// 0-7 paises
-		JOptionPane.showMessageDialog(null, "SEMIFINAL");
+		JOptionPane.showMessageDialog(null, "CUARTOS DE FINAL");
 
 		// PRIMERO PAIS
 		dupla2.add(0, cuartos.get(0));
@@ -146,25 +157,38 @@ public class Main {
 		dupla2 = primeroSegundoEmpate(dupla2);
 		semis.add(3, dupla2.get(0));
 
-		for (Pais pais : semis) {
-			ganadores += pais.getNombre() + " grupo: " + pais.getGrupo() + "\n";
+		
+		
+		for (int i = 0; i < 4; i++) {
+			ganadores += "\nPais: "+semis.get(i).getNombre() + ", Grupo: "+semis.get(i).getGrupo()+", Goles: "+semis.get(i).getGoles();
 		}
-		JOptionPane.showMessageDialog(null, "pasaron a semifinal:\n" + ganadores);
+		
+		for (int i = 0; i < 4; i+=2) {
+			partidos.add(crearPartido(i,semis.get(i),semis.get(i+1)));
+		}		
+		
+		for (Partido partido : partidos) {
+			listado +=partido.getEquipo1().getNombre()+" VS "+partido.getEquipo2().getNombre()+"\n";
+		}
+
+		JOptionPane.showMessageDialog(null, ganadores);
+		JOptionPane.showMessageDialog(null, listado);
 
 		return semis;// o-3 paises
 	}
 
-	public static LinkedList<Pais> pasarCuartos(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB,
-			LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF,
-			LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {// recibe lista de octavos ordenados
-		String ganadores = "pasan a CUARTOS DE FINAL\n";
+	public static LinkedList<Pais> pasarCuartos(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB,LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF,	LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {// recibe lista de octavos ordenados
+
+		String listado = "ASI QUEDAN LOS PARTIDOS EN CUARTOS\n";		
+		String ganadores = " PASAN A CUARTOS \n";
 		LinkedList<Pais> dupla1 = new LinkedList<Pais>();
 		LinkedList<Pais> octavos = new LinkedList<Pais>();
 		LinkedList<Pais> cuartos = new LinkedList<Pais>();
+		LinkedList<Partido> partidos =  new LinkedList<Partido>();
 
 		octavos = pasarOctavos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
 
-		JOptionPane.showMessageDialog(null, "CUARTOS DE FINAL");
+		JOptionPane.showMessageDialog(null, "OCTAVOS DE FINAL");
 		/*
 		 * for (int i = 0; i < 8; i++) { octavos1.add(octavos.get(i)); } for (int i = 8;
 		 * i < 16; i++) { octavos2.add(octavos.get(i)); }
@@ -173,7 +197,6 @@ public class Main {
 		 * cuartos1.add(primeroSegundoEmpate(dupla).get(0));// solo tomo el ganador y lo
 		 * guardo en cuartos1
 		 */
-
 		dupla1.add(0, octavos.get(0));
 		dupla1.add(1, octavos.get(1));
 		dupla1 = primeroSegundoEmpate(dupla1);
@@ -246,19 +269,26 @@ public class Main {
 		dupla1.add(1, octavos.get(15));
 		dupla1 = primeroSegundoEmpate(dupla1);
 		cuartos.add(7, dupla1.get(0));
-
-		for (Pais pais : cuartos) {
-			ganadores += pais.getNombre() + " grupo: " + pais.getGrupo() + "\n";
+		
+		for (int i = 0; i < 8; i++) {
+			ganadores += "\nPais: "+cuartos.get(i).getNombre() + ", Grupo: "+cuartos.get(i).getGrupo()+", Goles: "+cuartos.get(i).getGoles();
+		}
+		
+		for (int i = 0; i < 8; i+=2) {
+			partidos.add(crearPartido(i,cuartos.get(i),cuartos.get(i+1)));
+		}		
+		
+		for (Partido partido : partidos) {
+			listado +=partido.getEquipo1().getNombre()+" VS "+partido.getEquipo2().getNombre()+"\n";
 		}
 
-		JOptionPane.showMessageDialog(null, "pasaron a cuartos:\n" + ganadores);
+		JOptionPane.showMessageDialog(null, ganadores);
+		JOptionPane.showMessageDialog(null, listado);
 		// 0-7 paises
 		return cuartos;// devuelve los que estan en cuartos ordenado igual que en octavos
 	}
 
-	public static LinkedList<Pais> pasarOctavos(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB,
-			LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF,
-			LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
+	public static LinkedList<Pais> pasarOctavos(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB,	LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF,LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
 
 		String octavos1 = " PASAN A OCTAVOS ";
 		String octavos2 = " PASAN A OCTAVOS ";
@@ -268,7 +298,9 @@ public class Main {
 		LinkedList<Pais> dupla = new LinkedList<Pais>();
 		LinkedList<Pais> sinorden = new LinkedList<Pais>();
 		LinkedList<Partido> partidos =  new LinkedList<Partido>();
-
+		
+		JOptionPane.showMessageDialog(null, "FASE DE GRUPOS");
+		
 		dupla = primeroSegundoEmpate(paisesA);
 		sinorden.add(0, dupla.get(0));// 1A
 		sinorden.add(1, dupla.get(1));// 2A
@@ -313,10 +345,10 @@ public class Main {
 		octavos.add(15, sinorden.get(13));// 2G
 
 		for (int i = 0; i < 8; i++) {
-			octavos1 += "\nPais: "+octavos.get(i).getNombre() + ", grupo: "+octavos.get(i).getGrupo()+", Puntos: "+octavos.get(i).getPuntos();
+			octavos1 += "\nPais: "+octavos.get(i).getNombre() + ", grupo: "+octavos.get(i).getGrupo()+", Goles: "+octavos.get(i).getGoles();
 		}
 		for (int i = 8; i < 16; i++) {
-			octavos2 += "\nPais: "+octavos.get(i).getNombre() + ", grupo: "+octavos.get(i).getGrupo()+", Puntos: "+octavos.get(i).getPuntos();
+			octavos2 += "\nPais: "+octavos.get(i).getNombre() + ", grupo: "+octavos.get(i).getGrupo()+", Goles: "+octavos.get(i).getGoles();
 		}
 		
 		for (int i = 0; i < 16; i+=2) {
@@ -422,20 +454,17 @@ public class Main {
 		boolean encontrado = false;
 		LinkedList<Partido> todos = General();
 		// recorre toda la lista de partidos aunque encuentre los partidos que le indico
-		String pais = JOptionPane.showInputDialog("ingrese el nombre del pais para buscar partidos relacionados");
+		String pais = JOptionPane.showInputDialog("ingrese el nombre del pais para buscar los partidos relacionados");
 		String partidos = "";
 		for (Partido partido : todos) {
-			if (partido.getEquipo1().getNombre().equalsIgnoreCase(pais)
-					|| partido.getEquipo2().getNombre().equalsIgnoreCase(pais)) {
+			if (partido.getEquipo1().getNombre().equalsIgnoreCase(pais)	|| partido.getEquipo2().getNombre().equalsIgnoreCase(pais)) {
 				encontrado = true;
-				partidos = partidos + "\n" + partido.getEquipo1().getNombre() + " VS "
-						+ partido.getEquipo2().getNombre();
+				partidos = partidos + "\n" + partido.getEquipo1().getNombre() + " VS "	+ partido.getEquipo2().getNombre();
 			}
 		} // terminar de recorrer todos los partidos
 
 		if (encontrado == false) {
-			int b = Integer.parseInt(JOptionPane.showInputDialog("No se encontro partidos relacionados con " + pais
-					+ ", desea agregar este Pais a la base de datos?\n1-SI\n2-NO"));
+			int b = Integer.parseInt(JOptionPane.showInputDialog("No se encontro partidos relacionados con " + pais	+ ", desea agregar este Pais a la base de datos?\n1-SI\n2-NO"));
 			if (b == 1) {
 				JOptionPane.showMessageDialog(null, "agregar partido");
 			}
@@ -445,10 +474,9 @@ public class Main {
 	}
 
 	public static void buscarTabla() {// buscar una tabla
-
 		LinkedList<Partido> todos = General();
 		String tabla = "";
-		String grupo = JOptionPane.showInputDialog("ingrese la letra del grupo para buscar partidos de ese grupo");
+		String grupo = JOptionPane.showInputDialog("ingrese la letra del grupo para mostrar losa partidos de ese grupo");
 
 		for (Partido partido : todos) {
 			if (partido.getEquipo1().getGrupo() == grupo.charAt(0)) {// si grupo convertido en char es igual a Grupo
