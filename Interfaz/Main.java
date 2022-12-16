@@ -14,7 +14,7 @@ public class Main {
 	public static void main(String[] args) {
 		Encargado pablo = new Encargado(01, "Pablo");
 		LinkedList<Partido> partidos = General();
-		LinkedList<Pais> ordenada = new LinkedList<Pais>();
+		LinkedList<Pais> finalistas = new LinkedList<Pais>();
 
 		LinkedList<Pais> paisesA = grupoA();
 		LinkedList<Pais> paisesB = grupoB();
@@ -25,7 +25,33 @@ public class Main {
 		LinkedList<Pais> paisesG = grupoG();
 		LinkedList<Pais> paisesH = grupoH();
 
-		pasarFinal(paisesA,paisesB,paisesC,paisesD,paisesE,paisesF,paisesG,paisesH);
+		finalistas = pasarFinal(paisesA,paisesB,paisesC,paisesD,paisesE,paisesF,paisesG,paisesH);
+		finalistas = primeroSegundoEmpate(finalistas);
+		JOptionPane.showMessageDialog(null, "primer lugar: "+finalistas.get(0).getNombre()+"\nsegundo lugar: "+finalistas.get(1).getNombre());
+		
+		int menu = Integer.parseInt(JOptionPane.showInputDialog("\n1-ingresar partido a la base de datos\n2-Buscar y/o cambiar datos de un partido\n3-jugar fase de grupos"));
+		
+		switch (menu) {
+		case 1:
+			
+			break;
+		case 2:// visualizar partidos
+			int res = Integer.parseInt(JOptionPane.showInputDialog("1-Ver la tabla de un grupo\n2-Ver un partido\n3-Ver todas las tablas"));
+			if (res == 1) {
+				buscarTabla();
+			} else if(res==2) {
+				buscarPartidos();
+			}else if (res == 3) {
+				//pablo.verpartidos();
+			}
+			break;
+		case 3:
+			// jugar primero y segundo de cada grupo X
+			
+			// obentener octavos, cuartos, semis y final
+			//String octavo = JOptionPane.showInputDialog("Octavos jugados, ingrese el nombre de u pais para ver si clasifico");
+			break;
+		}
 
 	}// termina el main
 	
@@ -36,7 +62,7 @@ public class Main {
 		LinkedList<Pais> semis = new LinkedList<Pais> ();
 		LinkedList<Pais> granfinal = new LinkedList<Pais> ();
 		
-		semis=pasarCuartos(paisesA,paisesB,paisesC,paisesD,paisesE,paisesF,paisesG,paisesH);// 0-4 paises
+		semis=pasarSemi(paisesA,paisesB,paisesC,paisesD,paisesE,paisesF,paisesG,paisesH);// 0-4 paises
 		JOptionPane.showMessageDialog(null, "GRAN FINAL");
 		
 		// PRIMERO PAIS
@@ -341,10 +367,43 @@ public static LinkedList<Pais> pasarOctavos(LinkedList<Pais> paisesA, LinkedList
 		return dupla;// devuelve los el primer y segundo ganador
 	}
 	
+	public static void buscarPartidos() {
+		boolean encontrado = false; 
+		LinkedList<Partido> todos = General();
+		// recorre toda la lista de partidos aunque encuentre los partidos que le indico
+		String pais = JOptionPane.showInputDialog("ingrese el nombre del pais para buscar partidos relacionados");
+		String partidos = "";
+			for (Partido partido : todos) {
+				if(partido.getEquipo1().getNombre().equalsIgnoreCase(pais) || partido.getEquipo2().getNombre().equalsIgnoreCase(pais)) {
+					encontrado = true;
+					partidos = partidos+"\n"+partido.getEquipo1().getNombre()+" VS "+partido.getEquipo2().getNombre();
+				}
+			}// terminar de recorrer todos los partidos
+			
+			if(encontrado==false) {
+				int b = Integer.parseInt(JOptionPane.showInputDialog("No se encontro partidos relacionados con "+pais+", desea agregar este Pais a la base de datos?\n1-SI\n2-NO"));
+				if (b==1) {
+					JOptionPane.showMessageDialog(null, "agregar partido");
+				}
+			}else if(encontrado){
+				JOptionPane.showMessageDialog(null,partidos);
+			} 
+	}
 	
+	public static void buscarTabla() {//buscar una tabla
+		
+		LinkedList<Partido> todos = General();
+		String tabla = "";
+		String grupo = JOptionPane.showInputDialog("ingrese la letra del grupo para buscar partidos de ese grupo");
+		
+		for (Partido partido : todos) {
+			if (partido.getEquipo1().getGrupo()==grupo.charAt(0)) {//si grupo convertido en char es igual a Grupo
+				tabla += partido.getEquipo1().getNombre()+" VS "+partido.getEquipo2().getNombre()+"\n";
+			}
+		}
+		JOptionPane.showMessageDialog(null, "grupo "+grupo+"\n"+tabla);
+	}
 	
-	
-
 
 	public static LinkedList<Pais> puntosGrupo(LinkedList<Pais> paises) {
 		// puntos aleatorios de cada pais entre 0 y 9
