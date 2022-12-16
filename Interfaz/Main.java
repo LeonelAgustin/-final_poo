@@ -25,12 +25,89 @@ public class Main {
 		LinkedList<Pais> paisesG = grupoG();
 		LinkedList<Pais> paisesH = grupoH();
 
-		pasarCuartos(paisesA,paisesB,paisesC,paisesD,paisesE,paisesF,paisesG,paisesH);
+		pasarFinal(paisesA,paisesB,paisesC,paisesD,paisesE,paisesF,paisesG,paisesH);
 
 	}// termina el main
 	
+	public static LinkedList<Pais> pasarFinal(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB, LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF, LinkedList<Pais> paisesG, LinkedList<Pais> paisesH){
+		
+		String ganadores = "pasan a FINAL\n";
+		LinkedList<Pais> dupla3 = new LinkedList<Pais> ();
+		LinkedList<Pais> semis = new LinkedList<Pais> ();
+		LinkedList<Pais> granfinal = new LinkedList<Pais> ();
+		
+		semis=pasarCuartos(paisesA,paisesB,paisesC,paisesD,paisesE,paisesF,paisesG,paisesH);// 0-4 paises
+		JOptionPane.showMessageDialog(null, "GRAN FINAL");
+		
+		// PRIMERO PAIS
+				dupla3.add(0,semis.get(0));
+				dupla3.add(1,semis.get(1));
+				dupla3 = primeroSegundoEmpate(dupla3);
+				granfinal.add(0,dupla3.get(0));
+		// SEGUNDO PAIS
+				dupla3.remove(1);
+				dupla3.remove(0);		
+				
+				dupla3.add(0,semis.get(2));
+				dupla3.add(1,semis.get(3));
+				dupla3 = primeroSegundoEmpate(dupla3);
+				granfinal.add(1,dupla3.get(0));
+				
+				for (Pais pais : granfinal) {
+					ganadores += pais.getNombre()+" grupo: "+pais.getGrupo()+"\n";
+				}
+				JOptionPane.showMessageDialog(null, "pasaron a la gran final:\n"+ganadores);
+				
+		return granfinal;
+	}
+	
+	public static LinkedList<Pais> pasarSemi(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB, LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF, LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
+		String ganadores = "pasan a SEMIFINAL\n";
+		LinkedList<Pais> dupla2 = new LinkedList<Pais> ();
+		LinkedList<Pais> cuartos = new LinkedList<Pais> ();
+		LinkedList<Pais> semis = new LinkedList<Pais> ();
+		
+		cuartos=pasarCuartos(paisesA,paisesB,paisesC,paisesD,paisesE,paisesF,paisesG,paisesH);// 0-7 paises
+		JOptionPane.showMessageDialog(null, "SEMIFINAL");
+						
+		// PRIMERO PAIS
+		dupla2.add(0,cuartos.get(0));
+		dupla2.add(1,cuartos.get(1));
+		dupla2 = primeroSegundoEmpate(dupla2);
+		semis.add(0,dupla2.get(0));
+		// SEGUNDO PAIS
+		dupla2.remove(1);
+		dupla2.remove(0);		
+		
+		dupla2.add(0,cuartos.get(2));
+		dupla2.add(1,cuartos.get(3));
+		dupla2 = primeroSegundoEmpate(dupla2);
+		semis.add(1,dupla2.get(0));
+		// TERCER PAIS
+				dupla2.remove(1);
+				dupla2.remove(0);				
+				dupla2.add(0,cuartos.get(4));
+				dupla2.add(1,cuartos.get(5));
+				dupla2 = primeroSegundoEmpate(dupla2);
+				semis.add(2,dupla2.get(0));
+		// CUARTO PAIS
+				dupla2.remove(1);
+				dupla2.remove(0);				
+				dupla2.add(0,cuartos.get(6));
+				dupla2.add(1,cuartos.get(7));
+				dupla2 = primeroSegundoEmpate(dupla2);
+				semis.add(3,dupla2.get(0));
+				
+				for (Pais pais : semis) {
+					ganadores += pais.getNombre()+" grupo: "+pais.getGrupo()+"\n";
+				}
+				JOptionPane.showMessageDialog(null, "pasaron a semifinal:\n"+ganadores);
+		
+		return semis;// o-3 paises
+	} 
+	
 	public static LinkedList<Pais> pasarCuartos(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB, LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF, LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {// recibe lista de octavos ordenados
-		String ganadores = "pasan a CUARTOS DE FINAL";
+		String ganadores = "pasan a CUARTOS DE FINAL\n";
 		LinkedList<Pais> dupla1 = new LinkedList<Pais> ();
 		LinkedList<Pais> octavos = new LinkedList<Pais> ();
 		LinkedList<Pais> cuartos = new LinkedList<Pais> ();
@@ -127,13 +204,73 @@ public class Main {
 		}
 		
 		JOptionPane.showMessageDialog(null, "pasaron a cuartos:\n"+ganadores);		
-		/*for (Pais pais : cuartos) {
-			mostrar += pais.getNombre()+"\n";
-		}*/
+		// 0-7 paises		
+		return cuartos;// devuelve los que estan en cuartos ordenado igual que en octavos
+	}
+	
+public static LinkedList<Pais> pasarOctavos(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB, LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF, LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
 		
-		//JOptionPane.showMessageDialog(null, mostrar);
+		String octavos1 = "octavos 1\n";
+		String octavos2 = "octavos 2\n";
+		LinkedList<Pais> octavos = new LinkedList<Pais> ();
+		LinkedList<Pais> dupla = new LinkedList<Pais>();
+		LinkedList<Pais> sinorden = new LinkedList<Pais>();
 		
-		return null;
+		dupla = primeroSegundoEmpate(paisesA);
+		sinorden.add(0, dupla.get(0));// 1A
+		sinorden.add(1, dupla.get(1));// 2A
+		dupla = primeroSegundoEmpate(paisesB);
+		sinorden.add(2, dupla.get(0));// 1B
+		sinorden.add(3, dupla.get(1));// 2B
+		dupla = primeroSegundoEmpate(paisesC);
+		sinorden.add(4, dupla.get(0));// 1C
+		sinorden.add(5, dupla.get(1));// 2C
+		dupla = primeroSegundoEmpate(paisesD);
+		sinorden.add(6, dupla.get(0));// 1D
+		sinorden.add(7, dupla.get(1));// 2D
+		dupla = primeroSegundoEmpate(paisesE);
+		sinorden.add(8, dupla.get(0));// 1E
+		sinorden.add(9, dupla.get(1));// 2E
+		dupla = primeroSegundoEmpate(paisesF);
+		sinorden.add(10, dupla.get(0));// 1F
+		sinorden.add(11, dupla.get(1));// 2F
+		dupla = primeroSegundoEmpate(paisesG);
+		sinorden.add(12, dupla.get(0));// 1G
+		sinorden.add(13, dupla.get(1));// 2G
+		dupla = primeroSegundoEmpate(paisesH);
+		sinorden.add(14, dupla.get(0));// 1H
+		sinorden.add(15, dupla.get(1));// 2H		
+		// acomodo los octavos de la izquierda primero luego los octavos de la derecha
+		octavos.add(0, sinorden.get(0));// 1A
+		octavos.add(1, sinorden.get(3));// 2B
+		octavos.add(2, sinorden.get(4));// 1C
+		octavos.add(3, sinorden.get(7));// 2D
+		octavos.add(4, sinorden.get(8));// 1E
+		octavos.add(5, sinorden.get(11));// 2F
+		octavos.add(6, sinorden.get(12));// 1G
+		octavos.add(7, sinorden.get(15));// 2H
+		
+		octavos.add(8, sinorden.get(2));// 1B
+		octavos.add(9, sinorden.get(1));// 2A
+		octavos.add(10, sinorden.get(6));// 1D
+		octavos.add(11, sinorden.get(5));// 2C
+		octavos.add(12, sinorden.get(10));// 1F		
+		octavos.add(13, sinorden.get(9));// 2E
+		octavos.add(14, sinorden.get(14));// 1H	
+		octavos.add(15, sinorden.get(13));// 2G
+		
+		
+		for (int i = 0; i < 8; i++) {
+			octavos1 += octavos.get(i).getNombre()+"\n";
+		}
+		for (int i = 8; i < 16; i++) {
+			octavos2 += octavos.get(i).getNombre()+"\n";
+		}
+		
+		JOptionPane.showMessageDialog(null, "primeros \n"+octavos1);
+		JOptionPane.showMessageDialog(null, "segundos \n"+octavos2);
+		// devuelve cordenado los octavos de la izquierda luego de la derecha
+		return octavos;// 0-15 paises
 	}
 	
 	public static LinkedList<Pais> primeroSegundoEmpate(LinkedList<Pais> paises) {
@@ -204,70 +341,7 @@ public class Main {
 		return dupla;// devuelve los el primer y segundo ganador
 	}
 	
-	public static LinkedList<Pais> pasarOctavos(LinkedList<Pais> paisesA, LinkedList<Pais> paisesB, LinkedList<Pais> paisesC, LinkedList<Pais> paisesD, LinkedList<Pais> paisesE, LinkedList<Pais> paisesF, LinkedList<Pais> paisesG, LinkedList<Pais> paisesH) {
-		
-		String octavos1 = "octavos 1\n";
-		String octavos2 = "octavos 2\n";
-		LinkedList<Pais> octavos = new LinkedList<Pais> ();
-		LinkedList<Pais> dupla = new LinkedList<Pais>();
-		LinkedList<Pais> sinorden = new LinkedList<Pais>();
-		
-		dupla = primeroSegundoEmpate(paisesA);
-		sinorden.add(0, dupla.get(0));// 1A
-		sinorden.add(1, dupla.get(1));// 2A
-		dupla = primeroSegundoEmpate(paisesB);
-		sinorden.add(2, dupla.get(0));// 1B
-		sinorden.add(3, dupla.get(1));// 2B
-		dupla = primeroSegundoEmpate(paisesC);
-		sinorden.add(4, dupla.get(0));// 1C
-		sinorden.add(5, dupla.get(1));// 2C
-		dupla = primeroSegundoEmpate(paisesD);
-		sinorden.add(6, dupla.get(0));// 1D
-		sinorden.add(7, dupla.get(1));// 2D
-		dupla = primeroSegundoEmpate(paisesE);
-		sinorden.add(8, dupla.get(0));// 1E
-		sinorden.add(9, dupla.get(1));// 2E
-		dupla = primeroSegundoEmpate(paisesF);
-		sinorden.add(10, dupla.get(0));// 1F
-		sinorden.add(11, dupla.get(1));// 2F
-		dupla = primeroSegundoEmpate(paisesG);
-		sinorden.add(12, dupla.get(0));// 1G
-		sinorden.add(13, dupla.get(1));// 2G
-		dupla = primeroSegundoEmpate(paisesH);
-		sinorden.add(14, dupla.get(0));// 1H
-		sinorden.add(15, dupla.get(1));// 2H		
-		// acomodo los octavos de la izquierda primero luego los octavos de la derecha
-		octavos.add(0, sinorden.get(0));// 1A
-		octavos.add(1, sinorden.get(3));// 2B
-		octavos.add(2, sinorden.get(4));// 1C
-		octavos.add(3, sinorden.get(7));// 2D
-		octavos.add(4, sinorden.get(8));// 1E
-		octavos.add(5, sinorden.get(11));// 2F
-		octavos.add(6, sinorden.get(12));// 1G
-		octavos.add(7, sinorden.get(15));// 2H
-		
-		octavos.add(8, sinorden.get(2));// 1B
-		octavos.add(9, sinorden.get(1));// 2A
-		octavos.add(10, sinorden.get(6));// 1D
-		octavos.add(11, sinorden.get(5));// 2C
-		octavos.add(12, sinorden.get(10));// 1F		
-		octavos.add(13, sinorden.get(9));// 2E
-		octavos.add(14, sinorden.get(14));// 1H	
-		octavos.add(15, sinorden.get(13));// 2G
-		
-		
-		for (int i = 0; i < 8; i++) {
-			octavos1 += octavos.get(i).getNombre()+"\n";
-		}
-		for (int i = 8; i < 16; i++) {
-			octavos2 += octavos.get(i).getNombre()+"\n";
-		}
-		
-		JOptionPane.showMessageDialog(null, "primeros \n"+octavos1);
-		JOptionPane.showMessageDialog(null, "segundos \n"+octavos2);
-		// devuelve cordenado los octavos de la izquierda luego de la derecha
-		return octavos;
-	}
+	
 	
 	
 
