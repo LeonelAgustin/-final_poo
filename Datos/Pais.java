@@ -5,10 +5,9 @@ public class Pais {
 	private int goles;
 	private boolean clasificado;
 	private char grupo;
-	//private int resultado;//cantidad de goles
 	private Equipo representante;
-	private int puntos;// suma 1 si gana si pierde no suma
-	private int posicion;//primero o segundos
+	private int puntos;
+	private int posicion;
 	
 	public Pais(String nombre, boolean clasificado, char grupo, Equipo representante, int puntos, int posicion) {
 		super();
