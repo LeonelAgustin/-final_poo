@@ -27,7 +27,8 @@ public class Main {
 		LinkedList<Pais> paisesF = grupoF();
 		LinkedList<Pais> paisesG = grupoG();
 		LinkedList<Pais> paisesH = grupoH();
-		
+		int recom=0;
+		int cant=0;
 		//MENU INTERACTIVO
 		do {
 			int a = Integer.parseInt(JOptionPane.showInputDialog("BIENVENIDO\nComo quiere ingresar:\n1-Encargado\n2-Hincha\n3-Salir"));
@@ -72,20 +73,18 @@ public class Main {
 				}
 				
 			} else if (a == 2) {
-				int c = Integer.parseInt(JOptionPane.showInputDialog("HOLA HINCHA\n1-Opinar sobre el resultado de un partido\n2-Apostar"));
-				if (c==1) {
-					
-				} else if(c==2) {
+				 
 				int d =  Integer.parseInt(JOptionPane.showInputDialog("HINCHA\nTENGA en cuenta que las apuestas sobre puntos solo se hacen en la fase de grupos,"
 						+ "\nya que a partir de octavos NO se tiene en cuenta los puntos \nSobre que desea apostar:"
 						+ "\n1-cantidad de puntos de un partido (probabilidad de 10-1)\n2-Clasificacion de un Pais a una etapa (probabilidad de 6-1)\n3-Sobre el resultado de un partido"));
 					switch (d) {
-					case 1:
+					case 1://apostar puntos
 						String resul="Perdio la apuesta";
-						int recom=0;
+						recom=0;
+						cant = 0;
 						String pais = JOptionPane.showInputDialog("Ingrese el nombre del pais");
 						int puntos = Integer.parseInt(JOptionPane.showInputDialog("ingrese los puntos con los que clasifico a OCTAVOS"));
-						int cant = Integer.parseInt(JOptionPane.showInputDialog("cuantas personas van apostar?"));
+						cant = Integer.parseInt(JOptionPane.showInputDialog("cuantas personas van apostar?"));
 						for (int i = 0; i < cant; i++) {
 							recom += Integer.parseInt(JOptionPane.showInputDialog("probabilidad 10-1, cuanto quiere apostar el hincha "+(i+1)+" ?"));							
 						}
@@ -98,14 +97,61 @@ public class Main {
 						}
 						JOptionPane.showMessageDialog(null, resul);
 						break;
-					case 2:
-						int etapa = Integer.parseInt(JOptionPane.showInputDialog(""));
-						break;
-					case 3:
+					case 2:// apostar clasificacion
+						recom=0;
+						cant = 0;
+						resul="Perdio la apuesta, No clasifico";
+						String pais2 = JOptionPane.showInputDialog("Ingrese el nombre del pais");
 						
+						int etapa = Integer.parseInt(JOptionPane.showInputDialog("Ingrese hasta que etapa apuesta que clasifico el pais"));
+						
+						cant = Integer.parseInt(JOptionPane.showInputDialog("cuantas personas van apostar?"));
+						for (int i = 0; i < cant; i++) {
+							recom += Integer.parseInt(JOptionPane.showInputDialog("probabilidad 6-1, cuanto quiere apostar el hincha "+(i+1)+" ?"));							
+						}
+						
+						switch (etapa) {
+						case 1://octavos
+							octavos = pasarOctavos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+							for (Pais pais1 : octavos) {
+								if (pais1.getNombre().equalsIgnoreCase(pais2) ) {
+										resul = "El Pais: "+pais2+" clasifico a octavos\ngano la apuesta cada jugador gano: "+((recom*60)/cant);
+								}
+							}
+							JOptionPane.showMessageDialog(null, resul);
+							break;
+						case 2:// cuartos
+							cuartos = pasarCuartos(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+							for (Pais pais1 : cuartos) {
+								if (pais1.getNombre().equalsIgnoreCase(pais2) ) {
+										resul = "El Pais: "+pais2+" clasifico a cuartos\ngano la apuesta cada jugador gano: "+((recom*60)/cant);
+								}
+							}
+							JOptionPane.showMessageDialog(null, resul);
+							break;
+						case 3:// semis
+							semis = pasarSemi(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+							for (Pais pais1 : semis) {
+								if (pais1.getNombre().equalsIgnoreCase(pais2) ) {
+										resul = "El Pais: "+pais2+" clasifico a semiFinal\ngano la apuesta cada jugador gano: "+((recom*60)/cant);
+								}
+							}
+							JOptionPane.showMessageDialog(null, resul);
+							break;
+						case 4:// final
+							finalistas = pasarFinal(paisesA, paisesB, paisesC, paisesD, paisesE, paisesF, paisesG, paisesH);
+							for (Pais pais1 : finalistas) {
+								if (pais1.getNombre().equalsIgnoreCase(pais2) ) {
+										resul = "El Pais: "+pais2+" clasifico a la gran final\ngano la apuesta cada jugador gano: "+((recom*60)/cant);
+								}
+							}
+							JOptionPane.showMessageDialog(null, resul);
+							break;
+						}
 						break;
+					
 					}
-				}
+				
 			} else {
 				salir = true;
 			}
