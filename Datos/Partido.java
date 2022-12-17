@@ -55,7 +55,7 @@ public class Partido {
 		return partidos;
 	}
 	
-	public LinkedList<Partido> General(){
+	public static LinkedList<Partido> General(){
 		
 		LinkedList<Partido> todos = new LinkedList<Partido>();
 		Partido partido1 = new Partido (1,new Pais("Qatar",false,'A',new Equipo("QFA",0),0,0),	new Pais("Ecuador",true,'A',new Equipo("ECU",0),0,0),100);

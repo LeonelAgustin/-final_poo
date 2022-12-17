@@ -13,9 +13,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		Encargado pablo = new Encargado(01, "Pablo");
-		Partido partido = null;
+		
 		Pais pais = null;
-		LinkedList<Partido> partidos = partido.General();
+		LinkedList<Partido> partidos = Partido.General();
 		LinkedList<Pais> finalistas = new LinkedList<Pais>();
 		
 		boolean salir = false;
@@ -94,7 +94,7 @@ public class Main {
 		
 		int d =  Integer.parseInt(JOptionPane.showInputDialog("HINCHA\nTENGA en cuenta que las apuestas sobre puntos solo se hacen en la fase de grupos,"
 				+ "\nya que a partir de octavos NO se tiene en cuenta los puntos \nSobre que desea apostar:"
-				+ "\n1-cantidad de puntos de un partido (probabilidad de 10-1)\n2-Clasificacion de un Pais a una etapa (probabilidad de 6-1)\n3-Sobre el resultado de un partido"));
+				+ "\n1-Cantidad de puntos de un partido (probabilidad de 10-1)\n2-Clasificacion de un Pais a una etapa (probabilidad de 6-1)"));
 			switch (d) {
 			case 1://apostar puntos
 				String resul="Perdio la apuesta";
